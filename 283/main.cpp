@@ -20,9 +20,10 @@ void moveZeroes(int* nums, int numsSize)
 
 int main()
 {
-    int nums[10000];
+    int *nums;
     int numsSize;
     scanf("%d",&numsSize);
+    nums = static_cast<int>(malloc(numsSize * sizeof(int)));
     moveZeroes(nums,numsSize);
     return 0;
 }

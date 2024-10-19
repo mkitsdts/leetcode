@@ -5,42 +5,8 @@
 1 <= nums.length <= 10^4
 -2^31 <= nums[i] <= 2^31 - 1
 
-先想到的下面这种方式，O(n^2)的时间复杂度和O(1)的空间复杂度
-void moveZeroes(int* nums, int numsSize)
-{
-    if(numsSize <= 1)
-        return;
-    int left = 0;
-    int right = 1;
-    while(right <= numsSize)
-    {
-        if(nums[left])
-        {
-            int tmp = nums[right];
-            nums[right] = 0;
-            nums[left++] = tmp;
-        }
-        ++left;
-        right = left + 1;
-    }
-}
-运行耗时105ms，远远高于平均，经过优化，把嵌套的小while循环
-思想是这样，把右边的非零值全部移到左边，那最后剩下的都是零
-void moveZeroes(int* nums, int numsSize)
-{
-    if(numsSize <= 1)
-        return;
-    int left = 0;
-    int right = 0;
-    while(right < numsSize)
-    {
-        if(nums[right])
-        {
-            int tmp = nums[right];
-            nums[right] = 0;
-            nums[left++] = tmp;
-        }
-        ++right;
-    }
-}
-运行，得到还算满意的结果
+最容易想到的是下面这种方式，开辟一个新的数组，把所以非0值复制到数组，这种方案需要O(n)的时间复杂度和O(n)的空间复杂度
+我觉得是性价比比较高的
+------------------------------------------------------
+但是题目说只要O(1)的空间复杂度，那我们就得想办法不要开辟新的数组
+然后就很自然想到双指针法，左指针负责定位，右指针负责寻找非0值，找到后交换左右指针的值，这样就优化到了O(1)的空间复杂度
