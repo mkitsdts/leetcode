@@ -14,6 +14,7 @@ struct TreeNode
 
 class solution
 {
+public:
     static vector<int> recursion(TreeNode* root)
     {
         if(!root)
