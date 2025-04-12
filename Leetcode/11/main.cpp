@@ -10,13 +10,13 @@ int solution(vector<int>& height)
 
     while(left != right)
     {
-        int tmp=min(height[left],height[right]);
+        int tmp=min(height[left],height[right])*(right-left);
         if(MAX < tmp)
             MAX = tmp;
         if(height[left]<height[right])
             ++left;
         else
-            ++right;
+            --right;
     }
     return MAX;
 }

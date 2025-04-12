@@ -1,5 +1,5 @@
 /*
-¸ø¶¨ n ¸ö·Ç¸ºÕûÊı±íÊ¾Ã¿¸ö¿í¶ÈÎª 1 µÄÖù×ÓµÄ¸ß¶ÈÍ¼£¬¼ÆËã°´´ËÅÅÁĞµÄÖù×Ó£¬ÏÂÓêÖ®ºóÄÜ½Ó¶àÉÙÓêË®¡£
+ç»™å®š n ä¸ªéè´Ÿæ•´æ•°è¡¨ç¤ºæ¯ä¸ªå®½åº¦ä¸º 1 çš„æŸ±å­çš„é«˜åº¦å›¾ï¼Œè®¡ç®—æŒ‰æ­¤æ’åˆ—çš„æŸ±å­ï¼Œä¸‹é›¨ä¹‹åèƒ½æ¥å¤šå°‘é›¨æ°´ã€‚
 */
 
 #include <iostream>
@@ -9,34 +9,36 @@ using namespace std;
 class Solution{
 public:
     static int trap(vector<int>& height){
-        if(height.size() == 0){
+        if(height.size() == 0)
             return 0;
-        }
-        int n = height.size() - 1;
-        int left = 0, right = 1;
-        int res = 0;
-        int mid = 0;
-        while(left < n){
-            if(height[right] >= height[left]){
-                res += ((right - left - 1) * height[left] - mid);
-                left = right;
-                mid = 0;
-                right = left + 1;
+        vector<int> left(height.size(),0);
+        vector<int> right(height.size(),0);
+        int MAX = 0;
+        for(int i=0;i<height.size();++i){
+            if(MAX < height[i]){
+                MAX = height[i];
+                left[i] = MAX;
             }else{
-                mid += height[right];
-                ++right;
-                if(right == n + 1){
-                    if(left == n - 1){
-                        break;
-                    }
-                    mid = 0;
-                    ++left;
-                    right = left + 1;
-                }
+                left[i] = MAX;
             }
         }
+        MAX = 0;
+        for(int i=height.size()-1;i>=0;--i){
+            if(MAX < height[i]){
+                MAX = height[i];
+                right[i] = MAX;
+            }else{
+                right[i] = MAX;
+            }
+        }
+        int result = 0;
+        for(int i=0;i<height.size();++i){
+            int tmp = min(left[i],right[i]) - height[i];
+            if(tmp > 0)
+                result += tmp;
+        }
+        return result;
 
-        return res;
     }
 }
 
